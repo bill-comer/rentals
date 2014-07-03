@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Implementation-Title: Rentals
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: uk.co.billcomer
+Build-Jdk: 1.7.0_45
+Built-By: comerb
+Created-By: Maven Integration for Eclipse
+
