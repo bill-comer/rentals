@@ -1,17 +1,20 @@
 package co.uk.billcomer.rentals.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 
 //@Entity
 //@Table(name="USER")
-public class User
+public class User implements Serializable
 {
+
+  private static final long serialVersionUID = -2398472394872948279L;
+  
   private Long userId;
   
   private String username;
