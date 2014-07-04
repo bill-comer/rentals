@@ -39,7 +39,7 @@ public abstract class GenericDao<T, ID extends Serializable>
     return classType;
   }
   
-  protected Session getSession()
+  public Session getSession()
   {
     return sessionFactory.getCurrentSession();
   }

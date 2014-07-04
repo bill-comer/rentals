@@ -22,7 +22,6 @@ public class UserJSONController
   @RequestMapping( value="/user/id/{userId}", method = RequestMethod.GET )
   public @ResponseBody User getUserById(@PathVariable Long userId) {
  
- 
     User user = userService.getUserById(userId);
     
     if (user == null) {
@@ -30,6 +29,17 @@ public class UserJSONController
     }
     
     return user;
+  }
+  
+  @RequestMapping( value="/user/username/{username:[a-z.]+}", method = RequestMethod.GET )
+  public @ResponseBody User getUserByUsername(@PathVariable String username) {
  
+    User user = userService.getUserByUsername(username);
+    
+    if (user == null) {
+      throw new IllegalArgumentException("Failed to find a user with USERNAME[" + username + "]");
+    }
+    
+    return user;
   }
 }
