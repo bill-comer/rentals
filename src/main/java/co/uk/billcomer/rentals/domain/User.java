@@ -78,5 +78,54 @@ public class User implements Serializable
   }
   
   
+  @Override
+  public boolean equals(Object aObj)
+  {
+    if (this == aObj)
+    {
+      return true;
+    }
+
+    if (aObj == null)
+    {
+      return false;
+    }
+
+    if (!(aObj instanceof User))
+    {
+      return false;
+    }
+
+    User castObj = (User) aObj;
+
+    return equality(getUserId(), castObj.getUserId())
+      && equality(getUsername(), castObj.getUsername())
+      && equality(getEmail(), castObj.getEmail())
+      && equality(getForename(), castObj.getForename())
+      && equality(getSurname(), castObj.getSurname())
+                  ;
+  }
+
+  /**
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode()
+  {
+    int result = 17;
+    result = 37 * (getUserId() != null ? (result + getUserId().hashCode()) : result);
+    result = 37 * (getUsername() != null ? (result + getUsername().hashCode()) : result);
+    result = 37 * (getEmail() != null ? (result + getEmail().hashCode()) : result);
+    result = 37 * (getForename() != null ? (result + getForename().hashCode()) : result);
+    result = 37 * (getSurname() != null ? (result + getSurname().hashCode()) : result);
+    return result;
+  }
+
+  private boolean equality(Object aObjA, Object aObjB)
+  {
+    return (aObjA == null) == (aObjB == null)
+      && (aObjA != null && aObjA.equals(aObjB))
+      || aObjA == null;
+  }
   
 }
