@@ -22,13 +22,13 @@ public class UserJSONController
   @RequestMapping( value="/user/id/{userId}", method = RequestMethod.GET )
   public @ResponseBody User getUserById(@PathVariable Long userId) {
  
-    User user = new User();
-    user.setUserId(userId);
-    
-    user.setUsername("foo bar");
-    user.setEmail("foo@foobar.com");
  
-    user = userService.getUserById(userId);
+    User user = userService.getUserById(userId);
+    
+    if (user == null) {
+      throw new IllegalArgumentException("Failed to find a user with ID[" + userId + "]");
+    }
+    
     return user;
  
   }
