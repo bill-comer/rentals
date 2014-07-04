@@ -16,6 +16,7 @@
 
     <spring.version>4.0.3.RELEASE</spring.version>
     <hibernate.version>4.3.5.Final</hibernate.version>
+    <mysql.version>5.1.31</mysql.version>
     <jackson.version>2.4.1</jackson.version>
     <jackson.databind-version>2.4.1</jackson.databind-version>
 
@@ -69,6 +70,15 @@
       <artifactId>hibernate-core</artifactId>
       <version>${hibernate.version}</version>
     </dependency>
+
+
+    <!-- Database -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>${mysql.version}</version>
+    </dependency>
+    
 
     <!-- Utils -->
     <dependency>
