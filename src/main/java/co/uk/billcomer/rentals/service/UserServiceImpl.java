@@ -9,7 +9,7 @@ import co.uk.billcomer.rentals.dao.UserDao;
 
 
 @Service("rentals.userService")
-@Transactional(value = "rentals_transactionManager")
+@Transactional(value = "transactionManager")
 public class UserServiceImpl<User> implements UserService<User>
 {
   @Autowired(required=true)
