@@ -28,7 +28,7 @@ public class UserJSONController
     user.setUsername("foo bar");
     user.setEmail("foo@foobar.com");
  
-    //User user = userService.getUserById(userId);
+    user = userService.getUserById(userId);
     return user;
  
   }

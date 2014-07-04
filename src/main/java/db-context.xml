@@ -9,6 +9,8 @@
   <bean id="rentals_dataSource" class="org.apache.commons.dbcp.BasicDataSource">
     <property name="username" value="rentals"/>
     <property name="password" value="rentals"/>
+      <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+      <property name="url" value="jdbc:mysql://localhost:3306/rentals" />
   </bean>
   
   <bean id="rentals_transactionManager" name="rentals_transactionManager"
@@ -65,5 +67,7 @@
     </property>
   </bean>
   
+  <bean id="persistenceExceptionTranslationPostProcessor"
+    class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
   
 </beans>

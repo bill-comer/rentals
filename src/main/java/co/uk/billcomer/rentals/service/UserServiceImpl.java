@@ -5,21 +5,22 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.uk.billcomer.rentals.dao.UserDao;
+import co.uk.billcomer.rentals.dao.UserDaoImpl;
+import co.uk.billcomer.rentals.domain.User;
 
 
 @Service("rentals.userService")
 @Transactional(value = "transactionManager")
-public class UserServiceImpl<User> implements UserService<User>
+public class UserServiceImpl implements UserService<User>
 {
   @Autowired(required=true)
   @Qualifier("rentals.userDao")
-  private UserDao<User> userDao;
+  private UserDaoImpl userDao;
   
   @Override
   public User getUserById(Long id)
   {
-    return userDao.getUserById(id);
+    return userDao.getById(id);
   }
 
 }
