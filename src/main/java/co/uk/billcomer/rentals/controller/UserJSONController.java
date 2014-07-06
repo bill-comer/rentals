@@ -25,7 +25,7 @@ public class UserJSONController
     User user = userService.getUserById(userId);
     
     if (user == null) {
-      throw new IllegalArgumentException("Failed to find a user with ID[" + userId + "]");
+      handleFailedRequest("Failed to find a user with ID[" + userId + "]");
     }
     
     return user;
@@ -37,9 +37,27 @@ public class UserJSONController
     User user = userService.getUserByUsername(username);
     
     if (user == null) {
-      throw new IllegalArgumentException("Failed to find a user with USERNAME[" + username + "]");
+      handleFailedRequest("Failed to find a user with USERNAME[" + username + "]");
     }
     
     return user;
+  }
+  
+
+  
+  @RequestMapping( value="/user/surname/{surname}", method = RequestMethod.GET )
+  public @ResponseBody User getUserBySurname(@PathVariable String surname) {
+ 
+    User user = userService.getUserBySurname(surname);
+    
+    if (user == null) {
+      handleFailedRequest("Failed to find a user with SURNAME[" + surname + "]");
+    }
+    
+    return user;
+  }
+  
+  private void handleFailedRequest(String message) {
+    throw new IllegalArgumentException(message);
   }
 }

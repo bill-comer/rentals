@@ -10,10 +10,15 @@ import co.uk.billcomer.rentals.domain.User;
 public class UserDaoImpl extends GenericDao<User, Long> 
 {
 
-  public User getUserByUsername(String username)
-  {
+  public User getUserByUsername(String username) {
     Query query = getSession().createQuery("FROM User user WHERE user.username = :username");
     query.setParameter("username", username);
+    return (User) query.uniqueResult();
+  }
+
+  public User getUserBySurname(String surname) {
+    Query query = getSession().createQuery("FROM User user WHERE user.surname = :surname");
+    query.setParameter("surname", surname);
     return (User) query.uniqueResult();
   }
 
