@@ -1,5 +1,7 @@
 package co.uk.billcomer.rentals.service;
 
+import java.util.List;
+
 import co.uk.billcomer.rentals.domain.User;
 
 public interface UserService<T>
@@ -8,5 +10,5 @@ public interface UserService<T>
   
   public T getUserByUsername(String username);
 
-  public User getUserBySurname(String surname);
+  public List<User> getUsersBySurname(String surname);
 }

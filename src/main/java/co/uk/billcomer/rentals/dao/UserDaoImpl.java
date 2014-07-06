@@ -1,5 +1,7 @@
 package co.uk.billcomer.rentals.dao;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -16,10 +18,11 @@ public class UserDaoImpl extends GenericDao<User, Long>
     return (User) query.uniqueResult();
   }
 
-  public User getUserBySurname(String surname) {
+
+  public List<User> getUsersBySurname(String surname) {
     Query query = getSession().createQuery("FROM User user WHERE user.surname = :surname");
     query.setParameter("surname", surname);
-    return (User) query.uniqueResult();
+    return (List<User>) query.list();
   }
 
 }

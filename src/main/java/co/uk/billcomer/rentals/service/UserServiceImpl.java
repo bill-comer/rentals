@@ -1,5 +1,7 @@
 package co.uk.billcomer.rentals.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -29,8 +31,10 @@ public class UserServiceImpl implements UserService<User>
   }
 
   @Override
-  public User getUserBySurname(String surname) {
-    return userDao.getUserBySurname(surname);
+  public List<User> getUsersBySurname(String surname) {
+    return userDao.getUsersBySurname(surname);
   }
+
+
 
 }

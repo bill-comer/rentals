@@ -1,5 +1,7 @@
 package co.uk.billcomer.rentals.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -46,15 +48,15 @@ public class UserJSONController
 
   
   @RequestMapping( value="/user/surname/{surname}", method = RequestMethod.GET )
-  public @ResponseBody User getUserBySurname(@PathVariable String surname) {
+  public @ResponseBody List<User> getUsersBySurname(@PathVariable String surname) {
  
-    User user = userService.getUserBySurname(surname);
+    List<User> users = userService.getUsersBySurname(surname);
     
-    if (user == null) {
+    if (users == null) {
       handleFailedRequest("Failed to find a user with SURNAME[" + surname + "]");
     }
     
-    return user;
+    return users;
   }
   
   private void handleFailedRequest(String message) {
