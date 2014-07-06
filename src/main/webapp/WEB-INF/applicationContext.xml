@@ -28,6 +28,8 @@
         <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
         <prop key="hibernate.show_sql">false</prop>
 
+<prop key="hibernate.current_session_context_class">context.TransactionAwareSessionContext</prop>
+
         <prop key="hibernate.transaction.flush_before_completion">true</prop>
         <prop key="hibernate.order_inserts">true</prop>
         <prop key="hibernate.order_updates">true</prop>
