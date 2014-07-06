@@ -52,7 +52,7 @@ public class UserJSONController
  
     List<User> users = userService.getUsersBySurname(surname);
     
-    if (users == null) {
+    if (users == null || users.size() == 0) {
       handleFailedRequest("Failed to find a user with SURNAME[" + surname + "]");
     }
     
