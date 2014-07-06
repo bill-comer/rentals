@@ -11,5 +11,6 @@
 *.lst
 
 #compiled stuff
-target/classes
+target/
+target/*
 *.class
