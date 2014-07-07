@@ -30,9 +30,7 @@ public class UserJSONController
     
     User user = userService.getUserById(userId);
     
-    
     if (user == null) {
-      //handleFailedRequest("Failed to find a user with ID[" + userId + "]");
       response = Response.createFailedResponse("Failed to find a user with ID[" + userId + "]");
     }
     else {
@@ -45,29 +43,39 @@ public class UserJSONController
   }
   
   @RequestMapping( value="/user/username/{username:[a-z.]+}", method = RequestMethod.GET )
-  public @ResponseBody User getUserByUsername(@PathVariable String username) {
- 
+  public @ResponseBody Response getUserByUsername(@PathVariable String username) {
+
+    Response response = null;
     User user = userService.getUserByUsername(username);
     
     if (user == null) {
-      handleFailedRequest("Failed to find a user with USERNAME[" + username + "]");
+      response = Response.createFailedResponse("Failed to find a user with USERNAME[" + username + "]");
+    }
+    else {
+      ArrayList<User> users = new ArrayList<User>();
+      users.add(user);
+      response = Response.createSuccessfulResponse(users);
     }
     
-    return user;
+    return response;
   }
   
 
   
   @RequestMapping( value="/user/surname/{surname}", method = RequestMethod.GET )
-  public @ResponseBody List<User> getUsersBySurname(@PathVariable String surname) {
- 
+  public @ResponseBody Response getUsersBySurname(@PathVariable String surname) {
+
+    Response response = null;
     List<User> users = userService.getUsersBySurname(surname);
     
     if (users == null || users.size() == 0) {
-      handleFailedRequest("Failed to find a user with SURNAME[" + surname + "]");
+      response = Response.createFailedResponse("Failed to find a user with SURNAME[" + surname + "]");
+    }
+    else {
+      response = Response.createSuccessfulResponse(users);
     }
     
-    return users;
+    return response;
   }
   
   private void handleFailedRequest(String message) {
