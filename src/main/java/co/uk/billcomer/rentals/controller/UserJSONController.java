@@ -89,8 +89,8 @@ public class UserJSONController
     Response response = null;
     User user = userService.getUserByUsername(username);
     
-    if (user == null ) {
-      response = Response.createFailedResponse("Failed to create a user[" + surname + "]");
+    if (user == null || user.getForename().length() > 3) {
+      response = Response.createFailedResponse("Failed to create a user[" + user + "]");
     }
     else {
       ArrayList<User> users = new ArrayList<User>();
