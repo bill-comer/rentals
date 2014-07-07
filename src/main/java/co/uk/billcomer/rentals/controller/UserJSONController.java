@@ -78,11 +78,12 @@ public class UserJSONController
     return response;
   }
   
-  @RequestMapping( value="/user/create/{username}/{surname}/{forename}", method = RequestMethod.GET )
+  @RequestMapping( value="/user/create/{username}/{surname}/{forename}/{email}", method = RequestMethod.GET )
   public @ResponseBody Response create(
               @PathVariable String username,
               @PathVariable String surname, 
-              @PathVariable String forename) {
+              @PathVariable String forename, 
+              @PathVariable String email) {
 
     Response response = null;
     List<User> users = userService.getUsersBySurname(surname);
