@@ -1,13 +1,19 @@
 package co.uk.billcomer.rentals.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 
 @Entity
@@ -23,6 +29,8 @@ public class User implements Serializable
   private String forename;
   private String surname;
   private String email;
+  
+  private Collection<UserRole> userRoles = new ArrayList<UserRole>();
   
   @Id
   @Column(name="userId", nullable=false)
@@ -79,6 +87,17 @@ public class User implements Serializable
     this.email = email;
   }
   
+  @OneToMany(mappedBy="user")
+  @Cascade({CascadeType.PERSIST, CascadeType.SAVE_UPDATE})
+  public Collection<UserRole> getUserRoles()
+  {
+    return userRoles;
+  }
+  public void setUserRoles(Collection<UserRole> userRoles)
+  {
+    this.userRoles = userRoles;
+  }
+  
   
   @Override
   public boolean equals(Object aObj)
@@ -105,6 +124,7 @@ public class User implements Serializable
       && equality(getEmail(), castObj.getEmail())
       && equality(getForename(), castObj.getForename())
       && equality(getSurname(), castObj.getSurname())
+      && equality(getUserRoles(), castObj.getUserRoles())
                   ;
   }
 
@@ -120,6 +140,7 @@ public class User implements Serializable
     result = 37 * (getEmail() != null ? (result + getEmail().hashCode()) : result);
     result = 37 * (getForename() != null ? (result + getForename().hashCode()) : result);
     result = 37 * (getSurname() != null ? (result + getSurname().hashCode()) : result);
+    result = 37 * (getUserRoles() != null ? (result + getUserRoles().hashCode()) : result);
     return result;
   }
 
@@ -131,7 +152,8 @@ public class User implements Serializable
   }
   
   public String toString() {
-    return "username[" + getUsername() + "],forname[" + getForename() + "],surname[" + getSurname() + "], email[" + getEmail() + "]";
+    return "username[" + getUsername() + "],forname[" + getForename() 
+                + "],surname[" + getSurname() + "], email[" + getEmail() + "], roles[" + getUserRoles() + "]";
   }
   
   public boolean isUpdateOfFieldsRequired(String email, String surname, String forename)

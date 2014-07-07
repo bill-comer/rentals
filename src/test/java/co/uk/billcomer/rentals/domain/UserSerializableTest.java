@@ -1,6 +1,11 @@
 package co.uk.billcomer.rentals.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.util.SerializationUtils;
@@ -9,7 +14,7 @@ public class UserSerializableTest
 {
   
   @Test
-  public void testEquals() throws Exception
+  public void testEqualsWithNoRoles() throws Exception
   {
     User srcUser1 = createUser1();
     
@@ -18,6 +23,18 @@ public class UserSerializableTest
     assertEquals("These two users should be equal", srcUser1, srcUser2);
   }
   
+  @Test
+  public void testEqualsWithRoles() throws Exception
+  {
+    User srcUser3 = createUser1_2();
+    
+    User srcUser4 = createUser2_2();
+    
+    assertEquals("These two users should be equal", srcUser3, srcUser4);
+  }
+  
+
+
   @Test
   public void testEquals_difft_Id() throws Exception
   {
@@ -96,6 +113,32 @@ public class UserSerializableTest
     return srcUser1;
   }
 
+  private User createUser1_2()
+  {
+    User user = createUser1();
+    UserRole role = new UserRole();
+    role.setRole("role1");
+    role.setUser(user);
+    List<UserRole> roles = new ArrayList<UserRole>();
+    roles.add(role);
+    user.setUserRoles(roles);
+    
+    return user;
+  }
+  
+  private User createUser2_2()
+  {
+    User user = createUser2();
+    UserRole role = new UserRole();
+    role.setRole("role1");
+    role.setUser(user);
+    List<UserRole> roles = new ArrayList<UserRole>();
+    roles.add(role);
+    user.setUserRoles(roles);
+    
+    return user;
+  }
+  
   @Test
   public void testSerialzable_Same() throws Exception
   {
