@@ -33,6 +33,20 @@ public class UserSerializableTest
     assertEquals("These two users should be equal", srcUser3, srcUser4);
   }
   
+  @Test
+  public void testEqualsWithDifftRoles() throws Exception
+  {
+    User srcUser3 = createUser1_2();
+    
+    User srcUser4 = createUser2_2();
+    UserRole role = new UserRole();
+    role.setRole("role2");
+    role.setUser(srcUser4);
+    srcUser4.getUserRoles().add(role);
+    
+    assertFalse("These two users have difft roles", srcUser3.equals(srcUser4));
+  }
+  
 
 
   @Test
