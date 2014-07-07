@@ -1,5 +1,6 @@
 package co.uk.billcomer.rentals.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.uk.billcomer.rentals.domain.User;
+import co.uk.billcomer.rentals.responder.Response;
 import co.uk.billcomer.rentals.service.UserService;
 
 
@@ -22,15 +24,24 @@ public class UserJSONController
   private UserService<User> userService;
   
   @RequestMapping( value="/user/id/{userId}", method = RequestMethod.GET )
-  public @ResponseBody User getUserById(@PathVariable Long userId) {
+  public @ResponseBody Response getUserById(@PathVariable Long userId) {
  
+    Response response = null;
+    
     User user = userService.getUserById(userId);
     
+    
     if (user == null) {
-      handleFailedRequest("Failed to find a user with ID[" + userId + "]");
+      //handleFailedRequest("Failed to find a user with ID[" + userId + "]");
+      response = Response.createFailedResponse("Failed to find a user with ID[" + userId + "]");
+    }
+    else {
+      ArrayList<User> users = new ArrayList<User>();
+      users.add(user);
+      response = Response.createSuccessfulResponse(users);
     }
     
-    return user;
+    return response;
   }
   
   @RequestMapping( value="/user/username/{username:[a-z.]+}", method = RequestMethod.GET )
