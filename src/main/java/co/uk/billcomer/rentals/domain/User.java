@@ -134,4 +134,21 @@ public class User implements Serializable
     return "username[" + getUsername() + "],forname[" + getForename() + "],surname[" + getSurname() + "], email[" + getEmail() + "]";
   }
   
+  public boolean isUpdateOfFieldsRequired(String email, String surname, String forename)
+  {
+    if (!email.equals(this.email)) {      
+      return true;
+    }
+    
+    if (!surname.equalsIgnoreCase(this.surname)) {      
+      return true;
+    }
+    
+    if (!forename.equalsIgnoreCase(this.forename)) {      
+      return true;
+    }
+    
+    return false;
+  }
+  
 }

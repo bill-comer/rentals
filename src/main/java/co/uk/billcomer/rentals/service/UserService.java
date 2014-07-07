@@ -14,5 +14,5 @@ public interface UserService<T>
 
   public User createUser(String username, String email, String surname, String forename);
 
-  public Object updateUser(String username);
+  public User updateUser(User user, String email, String surname, String forename);
 }

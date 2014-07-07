@@ -125,26 +125,27 @@ public class UserJSONController
     if (user == null) {
       response = Response.createFailedResponse("Failed to find a user with username[" + username + "].");
     }
-    else {    
-      user = userService.createUser(username.toLowerCase(), email.toLowerCase(), surname, forename);
-
-      if (user == null)
-      {
-        response = Response.createFailedResponse("Failed to create a user with username[" + username + "]");
-      }
-      else
-      {
-        ArrayList<User> users = new ArrayList<User>();
-        users.add(user);
-        response = Response.createSuccessfulResponse(users);
+    else {
+      
+      if (user.isUpdateOfFieldsRequired(email, surname, forename)) {
+        user = userService.updateUser(user, email.toLowerCase(), surname, forename);
+        
+        if (user == null) {
+          response = Response.createFailedResponse("Failed to create a user with username[" + username + "]");
+        }
+        else
+        {
+          ArrayList<User> users = new ArrayList<User>();
+          users.add(user);
+          response = Response.createSuccessfulResponse(users);
+        }
+      } else {
+        // No Update required
+        response = Response.createFailedResponse("No Update required for User with username[" + username + "].");
       }
     }
     return response;
   }
   
   
-  
-  private void handleFailedRequest(String message) {
-    throw new IllegalArgumentException(message);
-  }
 }

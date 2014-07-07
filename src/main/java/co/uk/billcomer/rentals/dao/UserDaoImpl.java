@@ -32,6 +32,12 @@ public class UserDaoImpl extends GenericDao<User, Long>
     return user;
   }
   
+  public User updateUser(User user)
+  {
+    makePersistent(user);
+    return user;
+  }
+  
   public void makePersistent(final User user)
   {
     if (user.getUserId() == null)

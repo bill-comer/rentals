@@ -78,6 +78,38 @@ public class UserJSONControllerUpdateUserTest
        ;
   }
   
+  @Test
+  public void test_update_failed_userIsSame() throws Exception
+  {
+    //Mock expected results
+    User mockFoundUser = new User();
+    mockFoundUser.setUserId(2L);
+    mockFoundUser.setSurname("m_sur");
+    mockFoundUser.setForename("m_for");
+    mockFoundUser.setEmail("m_e@e.com");
+    mockFoundUser.setUsername("musername");
+    ArrayList<User> users = new ArrayList<User>();
+    users.add(mockFoundUser);
+    
+    Response expectedResponse = Response.createFailedResponse("No Update required for User with username[" + mockFoundUser.getUsername() + "].");
+    
+    ObjectMapper mapper = new ObjectMapper();
+    Writer jsonResponseWriter = new StringWriter();
+    mapper.writeValue(jsonResponseWriter, expectedResponse);
+    
+    this.mockMvc = MockMvcBuilders.standaloneSetup(userJSONController).build();
+    
+    //mocked service call to create
+    when(userservice.getUserByUsername(mockFoundUser.getUsername())).thenReturn(mockFoundUser);
+    
+    //Test method
+    ResultActions results = mockMvc.perform(get("/user/update/musername/m_e@e.com/m_sur/m_for"))
+         .andExpect(status().isOk())
+         .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+         .andExpect(content().string(jsonResponseWriter.toString()))
+       ;
+  }
+  
   
   ////////////////////////////////////////
   

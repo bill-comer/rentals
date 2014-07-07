@@ -48,9 +48,18 @@ public class UserServiceImpl implements UserService<User>
   }
 
   @Override
-  public Object updateUser(String username)
+  public User updateUser(User user, String email, String surname, String forename)
   {
-    return null;
+    boolean changeRequired = user.isUpdateOfFieldsRequired(email, surname, forename);
+    
+    if (changeRequired) {
+      user.setEmail(email.toLowerCase());
+      user.setSurname(surname);
+      user.setForename(forename);
+
+      userDao.updateUser(user);
+    }
+    return user;
   }
 
 
