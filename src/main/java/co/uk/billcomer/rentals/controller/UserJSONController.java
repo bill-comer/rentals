@@ -34,9 +34,7 @@ public class UserJSONController
       response = Response.createFailedResponse("Failed to find a user with ID[" + userId + "]");
     }
     else {
-      ArrayList<User> users = new ArrayList<User>();
-      users.add(user);
-      response = Response.createSuccessfulResponse(users);
+      response = createSuccessResponse(user);
     }
     
     return response;
@@ -52,9 +50,7 @@ public class UserJSONController
       response = Response.createFailedResponse("Failed to find a user with USERNAME[" + username + "]");
     }
     else {
-      ArrayList<User> users = new ArrayList<User>();
-      users.add(user);
-      response = Response.createSuccessfulResponse(users);
+      response = createSuccessResponse(user);
     }
     
     return response;
@@ -102,9 +98,7 @@ public class UserJSONController
       }
       else
       {
-        ArrayList<User> users = new ArrayList<User>();
-        users.add(user);
-        response = Response.createSuccessfulResponse(users);
+        response = createSuccessResponse(user);
       }
     }
     return response;
@@ -135,15 +129,23 @@ public class UserJSONController
         }
         else
         {
-          ArrayList<User> users = new ArrayList<User>();
-          users.add(user);
-          response = Response.createSuccessfulResponse(users);
+          response = createSuccessResponse(user);
         }
       } else {
         // No Update required
         response = Response.createFailedResponse("No Update required for User with username[" + username + "].");
       }
     }
+    return response;
+  }
+
+  private Response createSuccessResponse(User user)
+  {
+    Response response;
+    ArrayList<User> users = new ArrayList<User>();
+    users.add(user);
+    response = Response.createSuccessfulResponse(users);
+    
     return response;
   }
   
