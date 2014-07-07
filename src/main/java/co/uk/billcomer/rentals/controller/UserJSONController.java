@@ -94,7 +94,7 @@ public class UserJSONController
       response = Response.createFailedResponse("Failed to create a user with username[" + username + "]. Username already exists.");
     }
     else {    
-      user = userService.createUser(username, email, surname, forename);
+      user = userService.createUser(username.toLowerCase(), email.toLowerCase(), surname, forename);
 
       if (user == null)
       {
