@@ -25,7 +25,7 @@ import co.uk.billcomer.rentals.domain.User;
 import co.uk.billcomer.rentals.responder.Response;
 import co.uk.billcomer.rentals.service.UserService;
 
-public class UserJSONControllerCreateUser
+public class UserJSONControllerCreateUserTest
 {
 
   public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
