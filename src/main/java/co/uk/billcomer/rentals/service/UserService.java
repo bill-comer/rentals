@@ -11,4 +11,6 @@ public interface UserService<T>
   public T getUserByUsername(String username);
 
   public List<User> getUsersBySurname(String surname);
+
+  public User createUser(String username, String email, String surname, String forename);
 }

@@ -87,17 +87,26 @@ public class UserJSONController
               ) {
 
     Response response = null;
+    
+
     User user = userService.getUserByUsername(username);
-    
-    if (user == null || user.getForename().length() > 3) {
-      response = Response.createFailedResponse("Failed to create a user[" + user + "]");
+    if (user != null) {
+      response = Response.createFailedResponse("Failed to create a user with username[" + username + "]. Username already exists.");
     }
-    else {
-      ArrayList<User> users = new ArrayList<User>();
-      users.add(user);
-      response = Response.createSuccessfulResponse(users);
+    else {    
+      user = userService.createUser(username, email, surname, forename);
+
+      if (user == null)
+      {
+        response = Response.createFailedResponse("Failed to create a user with username[" + username + "]");
+      }
+      else
+      {
+        ArrayList<User> users = new ArrayList<User>();
+        users.add(user);
+        response = Response.createSuccessfulResponse(users);
+      }
     }
-    
     return response;
   }
   

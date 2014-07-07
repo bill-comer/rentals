@@ -25,4 +25,11 @@ public class UserDaoImpl extends GenericDao<User, Long>
     return (List<User>) query.list();
   }
 
+
+  public User createUser(User user)
+  {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

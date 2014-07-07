@@ -35,6 +35,18 @@ public class UserServiceImpl implements UserService<User>
     return userDao.getUsersBySurname(surname);
   }
 
+  @Override
+  public User createUser(String username, String email, String surname, String forename)
+  {
+    User user = new User();
+    user.setUsername(username);
+    user.setSurname(surname);
+    user.setEmail(email);
+    user.setForename(forename);
+    
+    return userDao.createUser(user);
+  }
+
 
 
 }
