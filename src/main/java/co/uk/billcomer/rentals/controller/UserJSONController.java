@@ -101,28 +101,6 @@ public class UserJSONController
     return response;
   }
   
-/*  @RequestMapping( value="/user/create/{username:[a-z.]+}/{surname}/{forename}/{email:[a-z]+\\.[a-z]+}", method = RequestMethod.GET )
-  public @ResponseBody Response createUser(
-              @PathVariable String username,
-              @PathVariable String surname, 
-              @PathVariable String forename, 
-              @PathVariable String email) {
-
-    Response response = null;
-    User user = userService.getUserByUsername(username);
-    
-    if (user == null) {
-      response = Response.createFailedResponseForUser(user, "Failed to create a user[" + user + "]");
-      //response = Response.createFailedResponse("Failed to find a user with USERNAME[" + username + "]");
-    }
-    else {
-      ArrayList<User> users = new ArrayList<User>();
-      users.add(user);
-      response = Response.createSuccessfulResponse(users);
-    }
-    
-    return response;
-  }*/
   
   private void handleFailedRequest(String message) {
     throw new IllegalArgumentException(message);
