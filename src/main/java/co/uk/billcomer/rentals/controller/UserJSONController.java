@@ -42,7 +42,7 @@ public class UserJSONController
     return response;
   }
   
-  @RequestMapping( value="/user/username/{username:[a-z.]+}", method = RequestMethod.GET )
+  @RequestMapping( value="/user/username/{username:[a-zA-Z.]+}", method = RequestMethod.GET )
   public @ResponseBody Response getUserByUsername(@PathVariable String username) {
 
     Response response = null;
@@ -89,7 +89,7 @@ public class UserJSONController
     Response response = null;
     
 
-    User user = userService.getUserByUsername(username);
+    User user = userService.getUserByUsername(username.toLowerCase());
     if (user != null) {
       response = Response.createFailedResponse("Failed to create a user with username[" + username + "]. Username already exists.");
     }

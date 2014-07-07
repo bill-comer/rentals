@@ -109,6 +109,37 @@ public class UserJSONControllerGetUserByUsernameTest
   }
   
   @Test
+  public void test_getUserById_success_plainUsername_CaseInsensitive() throws Exception
+  {
+    //Mock expected results
+    User mockFoundUser = new User();
+    mockFoundUser.setUserId(2L);
+    mockFoundUser.setSurname("m_sur");
+    mockFoundUser.setForename("m_for");
+    mockFoundUser.setEmail("m_e@e.com");
+    mockFoundUser.setUsername("musername");
+    ArrayList<User> users = new ArrayList<User>();
+    users.add(mockFoundUser);
+    Response expectedResponse = Response.createSuccessfulResponse(users);
+    
+    ObjectMapper mapper = new ObjectMapper();
+    Writer jsonResponseWriter = new StringWriter();
+    mapper.writeValue(jsonResponseWriter, expectedResponse);
+
+    
+    this.mockMvc = MockMvcBuilders.standaloneSetup(userJSONController).build();
+    
+    when(userservice.getUserByUsername("mUsername")).thenReturn(mockFoundUser);
+    
+    //Test method
+    ResultActions results = mockMvc.perform(get("/user/username/mUsername"))
+         .andExpect(status().isOk())
+         .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+         .andExpect(content().string(jsonResponseWriter.toString()))
+       ;
+  }
+  
+  @Test
   public void test_getUserById_failed() throws Exception
   {
     //Mock expected results
