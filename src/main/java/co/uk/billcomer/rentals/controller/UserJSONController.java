@@ -86,19 +86,21 @@ public class UserJSONController
               @PathVariable String email) {
 
     Response response = null;
-    List<User> users = userService.getUsersBySurname(surname);
+    User user = userService.getUserByUsername(username);
     
-    if (users == null || users.size() == 0) {
+    if (user == null ) {
       response = Response.createFailedResponse("Failed to create a user[" + surname + "]");
     }
     else {
+      ArrayList<User> users = new ArrayList<User>();
+      users.add(user);
       response = Response.createSuccessfulResponse(users);
     }
     
     return response;
   }
   
-  @RequestMapping( value="/user/create/{username:[a-z.]+}/{surname}/{forename}/{email:[a-z]+\\.[a-z]+}", method = RequestMethod.GET )
+/*  @RequestMapping( value="/user/create/{username:[a-z.]+}/{surname}/{forename}/{email:[a-z]+\\.[a-z]+}", method = RequestMethod.GET )
   public @ResponseBody Response createUser(
               @PathVariable String username,
               @PathVariable String surname, 
@@ -119,9 +121,7 @@ public class UserJSONController
     }
     
     return response;
-    
-
-  }
+  }*/
   
   private void handleFailedRequest(String message) {
     throw new IllegalArgumentException(message);
