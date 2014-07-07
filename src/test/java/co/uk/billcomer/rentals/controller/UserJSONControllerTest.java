@@ -1,6 +1,5 @@
 package co.uk.billcomer.rentals.controller;
 
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -19,7 +18,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.MockitoAnnotations.Mock;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -49,7 +47,7 @@ public class UserJSONControllerTest
   }
   
   @Test
-  public void test_fetUserById_success() throws Exception
+  public void test_getUserById_success() throws Exception
   {
     //Mock expected results
     User mockFoundUser = new User();
@@ -71,6 +69,30 @@ public class UserJSONControllerTest
     
     when(userservice.getUserById(2L)).thenReturn(mockFoundUser);
     
+    //Test method
+    ResultActions results = mockMvc.perform(get("/user/id/2"))
+         .andExpect(status().isOk())
+         .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+         .andExpect(content().string(jsonResponseWriter.toString()))
+       ;
+  }
+  
+  @Test
+  public void test_getUserById_failed() throws Exception
+  {
+    //Mock expected results
+    Response expectedResponse = Response.createFailedResponse("Failed to find a user with ID[" + 2 + "]");
+    
+    ObjectMapper mapper = new ObjectMapper();
+    Writer jsonResponseWriter = new StringWriter();
+    mapper.writeValue(jsonResponseWriter, expectedResponse);
+
+    
+    this.mockMvc = MockMvcBuilders.standaloneSetup(userJSONController).build();
+    
+    when(userservice.getUserById(2L)).thenReturn(null);
+    
+    //Test method
     ResultActions results = mockMvc.perform(get("/user/id/2"))
          .andExpect(status().isOk())
          .andExpect(content().contentType(APPLICATION_JSON_UTF8))
