@@ -34,6 +34,8 @@ public abstract class GenericDao<T, ID extends Serializable>
     classType = (Class<T>) ((ParameterizedType) clazz.getGenericSuperclass()).getActualTypeArguments()[0];
   }
   
+  
+  
   public Class<T> getClassType()
   {
     return classType;

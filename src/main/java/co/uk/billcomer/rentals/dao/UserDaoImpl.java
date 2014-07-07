@@ -28,8 +28,20 @@ public class UserDaoImpl extends GenericDao<User, Long>
 
   public User createUser(User user)
   {
-    // TODO Auto-generated method stub
-    return null;
+    makePersistent(user);
+    return user;
+  }
+  
+  public void makePersistent(final User user)
+  {
+    if (user.getUserId() == null)
+    {
+      getSession().save(user);
+    }
+    else
+    {
+      getSession().update(user);
+    }
   }
 
 }
