@@ -47,6 +47,12 @@ public class UserServiceImpl implements UserService<User>
     return userDao.createUser(user);
   }
 
+  @Override
+  public Object updateUser(String username)
+  {
+    return null;
+  }
+
 
 
 }

@@ -110,6 +110,39 @@ public class UserJSONController
     return response;
   }
   
+  @RequestMapping( value="/user/update/{username}/{email}/{surname}/{forename}", method = RequestMethod.GET )
+  public @ResponseBody Response update(
+              @PathVariable String username,
+              @PathVariable String email,
+              @PathVariable String surname, 
+              @PathVariable String forename 
+              ) {
+
+    Response response = null;
+    
+
+    User user = userService.getUserByUsername(username.toLowerCase());
+    if (user == null) {
+      response = Response.createFailedResponse("Failed to find a user with username[" + username + "].");
+    }
+    else {    
+      user = userService.createUser(username.toLowerCase(), email.toLowerCase(), surname, forename);
+
+      if (user == null)
+      {
+        response = Response.createFailedResponse("Failed to create a user with username[" + username + "]");
+      }
+      else
+      {
+        ArrayList<User> users = new ArrayList<User>();
+        users.add(user);
+        response = Response.createSuccessfulResponse(users);
+      }
+    }
+    return response;
+  }
+  
+  
   
   private void handleFailedRequest(String message) {
     throw new IllegalArgumentException(message);

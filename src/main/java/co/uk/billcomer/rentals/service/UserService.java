@@ -13,4 +13,6 @@ public interface UserService<T>
   public List<User> getUsersBySurname(String surname);
 
   public User createUser(String username, String email, String surname, String forename);
+
+  public Object updateUser(String username);
 }
