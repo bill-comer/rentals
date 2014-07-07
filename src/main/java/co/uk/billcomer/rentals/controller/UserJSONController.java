@@ -78,6 +78,24 @@ public class UserJSONController
     return response;
   }
   
+  @RequestMapping( value="/user/create/{surname}/{forename}", method = RequestMethod.GET )
+  public @ResponseBody Response create(
+              @PathVariable String surname, 
+              @PathVariable String forename) {
+
+    Response response = null;
+    List<User> users = userService.getUsersBySurname(surname);
+    
+    if (users == null || users.size() == 0) {
+      response = Response.createFailedResponse("Failed to create a user[" + surname + "]");
+    }
+    else {
+      response = Response.createSuccessfulResponse(users);
+    }
+    
+    return response;
+  }
+  
   @RequestMapping( value="/user/create/{username:[a-z.]+}/{surname}/{forename}/{email:[a-z]+\\.[a-z]+}", method = RequestMethod.GET )
   public @ResponseBody Response createUser(
               @PathVariable String username,
