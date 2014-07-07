@@ -3,6 +3,7 @@ package co.uk.billcomer.rentals.dao;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import co.uk.billcomer.rentals.domain.User;
@@ -40,6 +41,7 @@ public class UserDaoImpl extends GenericDao<User, Long>
   
   public void makePersistent(final User user)
   {
+    Transaction tx = getSession().beginTransaction();
     if (user.getUserId() == null)
     {
       getSession().save(user);
@@ -48,6 +50,7 @@ public class UserDaoImpl extends GenericDao<User, Long>
     {
       getSession().update(user);
     }
+    tx.commit();
   }
 
 }
