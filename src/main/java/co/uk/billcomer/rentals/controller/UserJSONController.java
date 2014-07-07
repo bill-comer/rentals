@@ -78,7 +78,7 @@ public class UserJSONController
     return response;
   }
   
-  @RequestMapping( value="/user/create/{username:[a-z.]+}/{surname}/{forename}/{email:[a-z.]+}", method = RequestMethod.GET )
+  @RequestMapping( value="/user/create/{username:[a-z.]+}/{surname}/{forename}/{email:[a-z]+\\.[a-z]+}", method = RequestMethod.GET )
   public @ResponseBody Response createUser(
               @PathVariable String username,
               @PathVariable String surname, 
@@ -88,8 +88,9 @@ public class UserJSONController
     Response response = null;
     User user = userService.getUserByUsername(username);
     
-    if (user == null  || user.getForename().length() > 3) {
-      response = Response.createFailedResponse("Failed to create a user[" + user + "]");
+    if (user == null) {
+      response = Response.createFailedResponseForUser(user, "Failed to create a user[" + user + "]");
+      //response = Response.createFailedResponse("Failed to find a user with USERNAME[" + username + "]");
     }
     else {
       ArrayList<User> users = new ArrayList<User>();
@@ -98,6 +99,8 @@ public class UserJSONController
     }
     
     return response;
+    
+
   }
   
   private void handleFailedRequest(String message) {

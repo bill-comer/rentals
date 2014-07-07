@@ -33,6 +33,22 @@ public class Response implements Serializable
     return response;
    }
   
+  public static Response createFailedResponseForUser(User user, String message) {
+    Response response = new Response();
+    
+    response.setSuccess(false);
+    
+    ArrayList<String> messages = new ArrayList<String>();
+    messages.add(message);
+    response.setMessages(messages);
+    
+    List<User> users = new ArrayList<User>();
+    users.add(user);
+    response.setUsers(users);
+    
+    return response;
+   }
+  
   public List<User> getUsers()
   {
     return users;

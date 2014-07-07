@@ -130,4 +130,8 @@ public class User implements Serializable
       || aObjA == null;
   }
   
+  public String toString() {
+    return "username[" + getUsername() + "],forname[" + getForename() + "],surname[" + getSurname() + "], email[" + getEmail() + "]";
+  }
+  
 }
