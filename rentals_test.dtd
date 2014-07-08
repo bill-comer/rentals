@@ -1,0 +1,21 @@
+<!ELEMENT dataset (
+    user*,
+    userrole*)>
+
+<!ELEMENT user EMPTY>
+<!ATTLIST user
+    userId CDATA #REQUIRED
+    username CDATA #REQUIRED
+    forename CDATA #REQUIRED
+    surname CDATA #REQUIRED
+    email CDATA #IMPLIED
+    managerUserId CDATA #IMPLIED
+>
+
+<!ELEMENT userrole EMPTY>
+<!ATTLIST userrole
+    userRoleId CDATA #REQUIRED
+    userId CDATA #REQUIRED
+    role CDATA #REQUIRED
+>
+
