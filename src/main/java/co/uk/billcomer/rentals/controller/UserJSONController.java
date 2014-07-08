@@ -41,6 +41,20 @@ public class UserJSONController
     return response;
   }
   
+  @RequestMapping( value="/user/throw/{testValue}", method = RequestMethod.GET )
+  public @ResponseBody Response testThrowingException(@PathVariable String testValue) {
+
+    Response response = Response.createFailedResponse("oops");
+    
+    if (testValue.equals("true")) {
+      throw new IllegalArgumentException("test throw");
+    }
+    
+    return response;
+  }
+  
+
+  
   @RequestMapping( value="/user/username/{username:[a-zA-Z.]+}", method = RequestMethod.GET )
   public @ResponseBody Response getUserByUsername(@PathVariable String username) {
 

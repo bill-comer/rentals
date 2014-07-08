@@ -11,10 +11,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
  
-    @ExceptionHandler(value = { IllegalArgumentException.class, IllegalStateException.class })
+    @ExceptionHandler(value = { Exception.class })
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
-        return handleExceptionInternal(ex, bodyOfResponse, 
+        return handleExceptionInternal(ex, "\n\nSOMETHING WENT WRONG-Exception[" + bodyOfResponse + "]\n\n", 
           new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 }
