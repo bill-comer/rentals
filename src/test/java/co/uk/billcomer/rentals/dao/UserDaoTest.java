@@ -115,5 +115,71 @@ public class UserDaoTest
     assertTrue("Should have found user-foo1_username", foundFoo1);
   }
 
+  @Test
+  @DatabaseSetup("rentals_2users_noRoles.xml")
+  public void test_createUser() throws Exception
+  {
+    User newUser = new User();
+    newUser.setUsername("new1");
+    newUser.setEmail("foo@foo.com");
+    newUser.setForename("new_f");
+    newUser.setSurname("new_s");
+    
+    List<User> users = userDao.getUsersBySurname("new_s");
+    assertTrue("Expected no users with name 'new_s'", users.size() == 0);
+    
+    newUser = userDao.createUser(newUser);
+    assertNotNull("iserId should now have a value", newUser.getUserId());
+    
+    users = userDao.getUsersBySurname("new_s");
+    assertTrue("There should noe be a user 'new_s'", users.size() == 1);
+  }
+  
+  @Test
+  @DatabaseSetup("rentals_2users_noRoles.xml")
+  public void test_updateUser() throws Exception
+  {
+ 
+    User user = userDao.getById(1L);
+    
+    assertNotNull("Should have found user with ID 1", user);
+    assertEquals("foo1_username", user.getUsername()); 
+    assertEquals("foo1_surname", user.getSurname()); 
+    
+    user.setSurname("foobar");
+    userDao.updateUser(user);
+    
+    User user2 = userDao.getById(1L);
+    assertNotNull("Should have found user with ID 1", user2);
+    assertEquals("foo1_username", user2.getUsername()); 
+    assertEquals("foobar", user2.getSurname()); 
+    
+  }
+ 
+  @Test
+  @DatabaseSetup("rentals_2users_noRoles.xml")
+  public void test_DoesUserHaveRole_userHasNoRoles() throws Exception
+  {
+    User user = userDao.getById(1L);
+    assertFalse("This user should have no roles", userDao.doesUserHaveRole(user, "Foooo"));
+  }
+  
+
+  @Test
+  @DatabaseSetup("rentals_3users_withRoles.xml")
+  public void test_DoesUserHaveRole_userHasOneRole() throws Exception
+  {
+    User user = userDao.getById(1L);
+    assertTrue("This user should have this role", userDao.doesUserHaveRole(user, "role_1"));
+  }
+  
+
+  @Test
+  @DatabaseSetup("rentals_3users_withRoles.xml")
+  public void test_DoesUserHaveRole_userHasOneRole_ButNotThisOne() throws Exception
+  {
+    User user = userDao.getById(1L);
+    assertFalse("This user should not have this roles", userDao.doesUserHaveRole(user, "role_2"));
+  }
   
 }

@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import co.uk.billcomer.rentals.domain.User;
+import co.uk.billcomer.rentals.domain.UserRole;
 
 
 @Repository("rentals.userDao")
@@ -57,6 +58,12 @@ public class UserDaoImpl extends GenericDao<User, Long>
 
   public boolean doesUserHaveRole(User user, String role)
   {
+    for (UserRole aRole : user.getUserRoles())
+    {
+      if (aRole.getRole().equalsIgnoreCase(role)) {
+        return true;
+      }
+    }
     return false;
   }
 

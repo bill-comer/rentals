@@ -1,0 +1,28 @@
+<!DOCTYPE dataset SYSTEM "rentals_test.dtd">
+<dataset>
+    <user userId="1" 
+                username="foo1_username"
+                forename="foo1_forename"
+                surname="foo1_surname"
+                email="foo1@foo.com"
+                /> 
+                
+    <user userId="2" 
+                username="foo2_username"
+                forename="foo2_forename"
+                surname="foo2_surname"
+                email="foo2@foo.com"
+                /> 
+                
+    <user userId="3" 
+                username="foo2_username"
+                forename="foo2_forename"
+                surname="foo1_surname"
+                email="foo2@foo.com"
+                /> 
+                
+  <userrole userId="1" 
+                userRoleId="1"
+                role="role_1"
+                />   
+</dataset>
