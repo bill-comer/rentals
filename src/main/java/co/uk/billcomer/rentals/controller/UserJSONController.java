@@ -184,6 +184,33 @@ public class UserJSONController
     return response;
   }
   
+  @RequestMapping( value="/user/addmanager/{username}/{managerToAdd:[a-zA-Z.]+}", method = RequestMethod.GET )
+  public @ResponseBody Response addManagerToUsers(@PathVariable String username, @PathVariable String managerToAdd) {
+
+    Response response = null;
+    
+    User user = userService.getUserByUsername(username.toLowerCase());
+    if (user == null) {
+      response = Response.createFailedResponse("Failed to find a user with username[" + username + "].");
+    }
+    else {      
+      User manager = userService.getUserByUsername(managerToAdd.toLowerCase());
+      if (manager == null) {
+        response = Response.createFailedResponse("Failed to find a manager with username[" + managerToAdd + "].");
+      }
+      else {
+        boolean userAdded = userService.addManagerToUser(user, manager);
+
+        List<User> users = new ArrayList<User>();
+        users.add(user);
+        response = Response.createSuccessfulResponse(users, "Successfully added Manager[" + managerToAdd + "] to user");
+      }
+    }
+    
+    
+    return response;
+  }
+  
   @RequestMapping( value="/user/addrole/{username}/{newrole}", method = RequestMethod.GET )
   public @ResponseBody Response addRole(@PathVariable String username, @PathVariable String newrole) {
 

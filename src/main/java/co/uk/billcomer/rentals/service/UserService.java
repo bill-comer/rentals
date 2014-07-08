@@ -23,4 +23,6 @@ public interface UserService<T>
   public List<User> getUsersWithNumberOfRoles(int i);
 
   public List<User> getUsersWithManagerAndNumberOfRoles(String manager, int size);
+
+  public boolean addManagerToUser(User user, User manager);
 }

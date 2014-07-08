@@ -87,5 +87,10 @@ public class UserServiceImpl implements UserService<User>
   }
 
 
+  @Override
+  public boolean addManagerToUser(User user, User manager)
+  {
+    return userDao.addManagerToUser(user, manager);
+  }
 
 }

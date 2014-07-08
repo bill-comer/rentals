@@ -76,4 +76,12 @@ public class UserDaoImpl extends GenericDao<User, Long>
     return (List<User>) query.list();
   }
 
+
+  public boolean addManagerToUser(User user, User manager)
+  {
+    user.setManager(manager);
+    makePersistent(user);
+    return true;
+  }
+
 }
