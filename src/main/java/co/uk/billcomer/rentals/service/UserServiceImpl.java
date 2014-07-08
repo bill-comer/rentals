@@ -80,6 +80,12 @@ public class UserServiceImpl implements UserService<User>
     return userDao.getUsersWithNumberOfRoles(numRoles);
   }
 
+  @Override
+  public List<User> getUsersWithManagerAndNumberOfRoles(String manager, int numRoles)
+  {
+    return userDao.getUsersWithManagerAndNumberOfRoles(manager, numRoles);
+  }
+
 
 
 }

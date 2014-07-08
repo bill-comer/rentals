@@ -21,4 +21,6 @@ public interface UserService<T>
   public User updateUser(User user);
 
   public List<User> getUsersWithNumberOfRoles(int i);
+
+  public List<User> getUsersWithManagerAndNumberOfRoles(String manager, int size);
 }

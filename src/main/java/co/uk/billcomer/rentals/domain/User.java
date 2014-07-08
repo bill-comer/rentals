@@ -1,17 +1,18 @@
 package co.uk.billcomer.rentals.domain;
 
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -34,7 +35,22 @@ public class User implements Serializable
   private String forename;
   private String surname;
   private String email;
-  
+
+  @JsonIgnore
+  private User manager;
+
+  @OneToOne(fetch=FetchType.EAGER)
+  @JoinColumn(name="managerUserId", nullable=true)
+  @JsonIgnore
+  public User getManager()
+  {
+    return manager;
+  }
+  @JsonIgnore
+  public void setManager(User manager)
+  {
+    this.manager = manager;
+  }
 
   private Collection<UserRole> userRoles = new ArrayList<UserRole>();
   

@@ -68,4 +68,12 @@ public class UserDaoImpl extends GenericDao<User, Long>
     return (List<User>) query.list();
   }
 
+  public List<User> getUsersWithManagerAndNumberOfRoles(String manager, int numRoles)
+  {
+    Query query = getSession().createQuery("FROM User user WHERE user.manager.username = :manager AND user.userRoles.size = :numRoles");
+    query.setParameter("numRoles", numRoles);
+    query.setParameter("manager", manager);
+    return (List<User>) query.list();
+  }
+
 }
