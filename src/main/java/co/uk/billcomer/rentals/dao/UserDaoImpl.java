@@ -39,7 +39,7 @@ public class UserDaoImpl extends GenericDao<User, Long>
     return user;
   }
   
-  public void makePersistent(final User user)
+  public User makePersistent(final User user)
   {
     Transaction tx = getSession().beginTransaction();
     if (user.getUserId() == null)
@@ -51,6 +51,13 @@ public class UserDaoImpl extends GenericDao<User, Long>
       getSession().update(user);
     }
     tx.commit();
+    return user;
+  }
+
+
+  public boolean doesUserHaveRole(User user, String role)
+  {
+    return false;
   }
 
 }

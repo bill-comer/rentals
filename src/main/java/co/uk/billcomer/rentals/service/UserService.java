@@ -15,4 +15,8 @@ public interface UserService<T>
   public User createUser(String username, String email, String surname, String forename);
 
   public User updateUser(User user, String email, String surname, String forename);
+
+  public boolean doesUserHaveRole(User mockFoundUser, String string);
+
+  public User updateUser(User user);
 }

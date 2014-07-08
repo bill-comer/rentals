@@ -10,7 +10,6 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -24,6 +23,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import co.uk.billcomer.rentals.domain.User;
 import co.uk.billcomer.rentals.responder.Response;
 import co.uk.billcomer.rentals.service.UserService;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UserJSONControllerUpdateUserTest
 {

@@ -3,18 +3,27 @@ package co.uk.billcomer.rentals.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
+@Entity
+@Table(name="USERROLE")
 public class UserRole implements Serializable {
 
   private static final long serialVersionUID = -2398472394872948279L;
 
 
+  @JsonIgnore
   private User user;
   private Long userRoleId;
   private String role;
@@ -45,10 +54,13 @@ public class UserRole implements Serializable {
   
   @ManyToOne(fetch=FetchType.EAGER, optional=false)
   @JoinColumn(name="userId", nullable=false)
+  @JsonIgnore
   public User getUser()
   {
     return user;
   }
+
+  @JsonIgnore
   public void setUser(User user)
   {
     this.user = user;

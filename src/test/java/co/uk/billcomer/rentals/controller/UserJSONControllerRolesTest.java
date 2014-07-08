@@ -21,12 +21,13 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import co.uk.billcomer.rentals.domain.User;
+import co.uk.billcomer.rentals.domain.UserRole;
 import co.uk.billcomer.rentals.responder.Response;
 import co.uk.billcomer.rentals.service.UserService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class UserJSONControllerGetUserByUsernameTest
+public class UserJSONControllerRolesTest
 {
 
   public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -48,7 +49,30 @@ public class UserJSONControllerGetUserByUsernameTest
   }
   
   @Test
-  public void test_getUserById_success_usernameWithDot() throws Exception
+  public void test_AddRoleToUser_userDoesNotExist() throws Exception
+  {
+    //Mock expected results
+    Response expectedResponse = Response.createFailedResponse("Failed to find a user with username[m.username].");
+
+    ObjectMapper mapper = new ObjectMapper();
+    Writer jsonResponseWriter = new StringWriter();
+    mapper.writeValue(jsonResponseWriter, expectedResponse);
+
+    
+    this.mockMvc = MockMvcBuilders.standaloneSetup(userJSONController).build();
+    
+    when(userservice.getUserByUsername("m.username")).thenReturn(null);
+    
+    //Test method
+    ResultActions results = mockMvc.perform(get("/user/addrole/m.username/newrole"))
+         .andExpect(status().isOk())
+         .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+         .andExpect(content().string(jsonResponseWriter.toString()))
+       ;
+  }
+  
+  @Test
+  public void test_AddRoleToUser_userAlreadyHasThatRole() throws Exception
   {
     //Mock expected results
     User mockFoundUser = new User();
@@ -57,9 +81,16 @@ public class UserJSONControllerGetUserByUsernameTest
     mockFoundUser.setForename("m_for");
     mockFoundUser.setEmail("m_e@e.com");
     mockFoundUser.setUsername("m.username");
+    
+    UserRole r = new UserRole();
+    r.setRole("newrole");
+    mockFoundUser.getUserRoles().add(r);
+    
     ArrayList<User> users = new ArrayList<User>();
     users.add(mockFoundUser);
-    Response expectedResponse = Response.createSuccessfulResponse(users);
+    
+
+    Response expectedResponse = Response.createFailedResponse("User [m.username] already has role[newrole].");
     
     ObjectMapper mapper = new ObjectMapper();
     Writer jsonResponseWriter = new StringWriter();
@@ -69,9 +100,10 @@ public class UserJSONControllerGetUserByUsernameTest
     this.mockMvc = MockMvcBuilders.standaloneSetup(userJSONController).build();
     
     when(userservice.getUserByUsername("m.username")).thenReturn(mockFoundUser);
+    when(userservice.doesUserHaveRole(mockFoundUser, "newrole")).thenReturn(true);
     
     //Test method
-    ResultActions results = mockMvc.perform(get("/user/username/m.username"))
+    ResultActions results = mockMvc.perform(get("/user/addrole/m.username/newrole"))
          .andExpect(status().isOk())
          .andExpect(content().contentType(APPLICATION_JSON_UTF8))
          .andExpect(content().string(jsonResponseWriter.toString()))
@@ -79,7 +111,7 @@ public class UserJSONControllerGetUserByUsernameTest
   }
   
   @Test
-  public void test_getUserById_success_plainUsername() throws Exception
+  public void test_AddRoleToUser_Success() throws Exception
   {
     //Mock expected results
     User mockFoundUser = new User();
@@ -87,10 +119,17 @@ public class UserJSONControllerGetUserByUsernameTest
     mockFoundUser.setSurname("m_sur");
     mockFoundUser.setForename("m_for");
     mockFoundUser.setEmail("m_e@e.com");
-    mockFoundUser.setUsername("musername");
+    mockFoundUser.setUsername("m.username");
+    
+    UserRole r = new UserRole();
+    r.setRole("newrole");
+    mockFoundUser.getUserRoles().add(r);
+    
     ArrayList<User> users = new ArrayList<User>();
     users.add(mockFoundUser);
-    Response expectedResponse = Response.createSuccessfulResponse(users);
+    
+
+    Response expectedResponse = Response.createFailedResponse("User [m.username] already has role[newrole].");
     
     ObjectMapper mapper = new ObjectMapper();
     Writer jsonResponseWriter = new StringWriter();
@@ -99,67 +138,19 @@ public class UserJSONControllerGetUserByUsernameTest
     
     this.mockMvc = MockMvcBuilders.standaloneSetup(userJSONController).build();
     
-    when(userservice.getUserByUsername("musername")).thenReturn(mockFoundUser);
+    when(userservice.getUserByUsername("m.username")).thenReturn(mockFoundUser);
+    when(userservice.doesUserHaveRole(mockFoundUser, "newrole")).thenReturn(false);
+    when(userservice.updateUser(mockFoundUser)).thenReturn(mockFoundUser);
     
     //Test method
-    ResultActions results = mockMvc.perform(get("/user/username/musername"))
+    ResultActions results = mockMvc.perform(get("/user/addrole/m.username/newrole"))
          .andExpect(status().isOk())
          .andExpect(content().contentType(APPLICATION_JSON_UTF8))
          .andExpect(content().string(jsonResponseWriter.toString()))
        ;
   }
   
-  @Test
-  public void test_getUserById_success_plainUsername_CaseInsensitive() throws Exception
-  {
-    //Mock expected results
-    User mockFoundUser = new User();
-    mockFoundUser.setUserId(2L);
-    mockFoundUser.setSurname("m_sur");
-    mockFoundUser.setForename("m_for");
-    mockFoundUser.setEmail("m_e@e.com");
-    mockFoundUser.setUsername("musername");
-    ArrayList<User> users = new ArrayList<User>();
-    users.add(mockFoundUser);
-    Response expectedResponse = Response.createSuccessfulResponse(users);
-    
-    ObjectMapper mapper = new ObjectMapper();
-    Writer jsonResponseWriter = new StringWriter();
-    mapper.writeValue(jsonResponseWriter, expectedResponse);
 
-    
-    this.mockMvc = MockMvcBuilders.standaloneSetup(userJSONController).build();
-    
-    when(userservice.getUserByUsername("mUsername")).thenReturn(mockFoundUser);
-    
-    //Test method
-    ResultActions results = mockMvc.perform(get("/user/username/mUsername"))
-         .andExpect(status().isOk())
-         .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-         .andExpect(content().string(jsonResponseWriter.toString()))
-       ;
-  }
   
-  @Test
-  public void test_getUserById_failed() throws Exception
-  {
-    //Mock expected results
-    Response expectedResponse = Response.createFailedResponse("Failed to find a user with USERNAME[foo.username]");
-    
-    ObjectMapper mapper = new ObjectMapper();
-    Writer jsonResponseWriter = new StringWriter();
-    mapper.writeValue(jsonResponseWriter, expectedResponse);
-
-    
-    this.mockMvc = MockMvcBuilders.standaloneSetup(userJSONController).build();
-    
-    when(userservice.getUserByUsername("foo.username")).thenReturn(null);
-    
-    //Test method
-    ResultActions results = mockMvc.perform(get("/user/username/foo.username"))
-         .andExpect(status().isOk())
-         .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-         .andExpect(content().string(jsonResponseWriter.toString()))
-       ;
-  }
+ 
 }

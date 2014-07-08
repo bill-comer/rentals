@@ -41,7 +41,7 @@ public class UserSerializableTest
     User srcUser4 = createUser2_2();
     UserRole role = new UserRole();
     role.setRole("role2");
-    role.setUser(srcUser4);
+    //role.setUser(srcUser4);
     srcUser4.getUserRoles().add(role);
     
     assertFalse("These two users have difft roles", srcUser3.equals(srcUser4));
@@ -132,7 +132,7 @@ public class UserSerializableTest
     User user = createUser1();
     UserRole role = new UserRole();
     role.setRole("role1");
-    role.setUser(user);
+    //role.setUser(user);
     List<UserRole> roles = new ArrayList<UserRole>();
     roles.add(role);
     user.setUserRoles(roles);
@@ -145,7 +145,7 @@ public class UserSerializableTest
     User user = createUser2();
     UserRole role = new UserRole();
     role.setRole("role1");
-    role.setUser(user);
+    //role.setUser(user);
     List<UserRole> roles = new ArrayList<UserRole>();
     roles.add(role);
     user.setUserRoles(roles);

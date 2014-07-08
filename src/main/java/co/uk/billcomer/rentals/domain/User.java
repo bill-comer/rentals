@@ -1,8 +1,10 @@
 package co.uk.billcomer.rentals.domain;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -30,6 +35,7 @@ public class User implements Serializable
   private String surname;
   private String email;
   
+
   private Collection<UserRole> userRoles = new ArrayList<UserRole>();
   
   @Id
@@ -93,6 +99,7 @@ public class User implements Serializable
   {
     return userRoles;
   }
+  
   public void setUserRoles(Collection<UserRole> userRoles)
   {
     this.userRoles = userRoles;

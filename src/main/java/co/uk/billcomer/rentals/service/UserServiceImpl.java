@@ -62,6 +62,18 @@ public class UserServiceImpl implements UserService<User>
     return user;
   }
 
+  @Override
+  public boolean doesUserHaveRole(User user, String role)
+  {
+    return userDao.doesUserHaveRole(user, role);
+  }
+
+  @Override
+  public User updateUser(User user)
+  {
+    return userDao.makePersistent(user);
+  }
+
 
 
 }

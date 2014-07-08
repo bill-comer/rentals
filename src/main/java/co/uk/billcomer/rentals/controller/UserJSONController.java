@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.uk.billcomer.rentals.domain.User;
+import co.uk.billcomer.rentals.domain.UserRole;
 import co.uk.billcomer.rentals.responder.Response;
 import co.uk.billcomer.rentals.service.UserService;
 
@@ -136,6 +137,40 @@ public class UserJSONController
         response = Response.createFailedResponse("No Update required for User with username[" + username + "].");
       }
     }
+    return response;
+  }
+  
+  @RequestMapping( value="/user/addrole/{username}/{newrole}", method = RequestMethod.GET )
+  public @ResponseBody Response addRole(@PathVariable String username, @PathVariable String newrole) {
+
+    Response response = null;
+    boolean userAlreadyHasRole = false;
+    
+    User user = userService.getUserByUsername(username.toLowerCase());
+    if (user == null) {
+      response = Response.createFailedResponse("Failed to find a user with username[" + username + "]."); 
+      response = Response.createFailedResponse("Failed to find a user with username[" + username + "].");    
+    }
+    else { 
+      for (UserRole userRole : user.getUserRoles())
+      {
+        if(userRole.getRole().equalsIgnoreCase(newrole)) {
+          userAlreadyHasRole = true;
+          response = Response.createFailedResponse("User [" + username + "] already has role[" + newrole + "]."); 
+        }
+      }
+      
+      if (!userAlreadyHasRole) {
+        UserRole userRole = new UserRole();
+        userRole.setRole(newrole);
+        userRole.setUser(user);
+        user.getUserRoles().add(userRole);
+        user = userService.updateUser(user);
+
+        response = createSuccessResponse(user);
+      }
+    }
+    
     return response;
   }
 
