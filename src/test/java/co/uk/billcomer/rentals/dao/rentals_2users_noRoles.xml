@@ -13,5 +13,12 @@
                 surname="foo2_surname"
                 email="foo2@foo.com"
                 /> 
+                
+    <user userId="3" 
+                username="foo2_username"
+                forename="foo2_forename"
+                surname="foo1_surname"
+                email="foo2@foo.com"
+                /> 
     
 </dataset>

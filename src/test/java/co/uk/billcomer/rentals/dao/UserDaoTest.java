@@ -2,6 +2,8 @@ package co.uk.billcomer.rentals.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,13 +59,61 @@ public class UserDaoTest
   @DatabaseSetup("rentals_2users_noRoles.xml")
   public void test_getById_NoneToFind() throws Exception
   {
-    User user = userDao.getById(3L);
+    User user = userDao.getById(99L);
     
-    assertNull("Should have found no user with ID 3", user);
+    assertNull("Should have found no user with ID 99", user);
   }
   
 
+  @Test
+  @DatabaseSetup("rentals_2users_noRoles.xml")
+  public void test_getUsersBySurname_NoneToFind() throws Exception
+  {
+    List<User> users = userDao.getUsersBySurname("bar");
+    
+    assertNotNull("Should be an empty list", users);
+    assertEquals("Should be a list with no members", 0, users.size());
+  }
+  
+  @Test
+  @DatabaseSetup("rentals_2users_noRoles.xml")
+  public void test_getUsersBySurname_OneToFind() throws Exception
+  {
+    List<User> users = userDao.getUsersBySurname("foo2_surname");
+    
+    assertNotNull("Should be an empty list", users);
+    assertEquals("Should be a list with 1 members", 1, users.size());
+    
+    assertEquals("user should be foo2_username", "foo2_username", users.get(0).getUsername());
+  }
 
+
+  @Test
+  @DatabaseSetup("rentals_2users_noRoles.xml")
+  public void test_getUsersBySurname_TwoToFind() throws Exception
+  {
+    List<User> users = userDao.getUsersBySurname("foo1_surname");
+    
+    assertNotNull("Should be an empty list", users);
+    assertEquals("Should be a list with 1 members", 2, users.size());
+    
+    boolean foundFoo1 = false;
+    boolean foundFoo2 = false;
+    
+    for (User user : users)
+    {
+      if (user.getUsername().equals("foo1_username")) {
+        foundFoo1 = true;
+      }
+      else 
+        if (user.getUsername().equals("foo2_username")) {
+          foundFoo2 = true;
+        }
+    }
+
+    assertTrue("Should have found user-foo1_username", foundFoo1);
+    assertTrue("Should have found user-foo1_username", foundFoo1);
+  }
 
   
 }
