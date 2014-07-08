@@ -140,6 +140,28 @@ public class UserJSONController
     return response;
   }
   
+  @RequestMapping( value="/user/withroles/{size}", method = RequestMethod.GET )
+  public @ResponseBody Response withRoles(@PathVariable int size) {
+
+    Response response = null;
+    
+    List<User> users = userService.getUsersWithNumberOfRoles(size);
+
+    String rolePluraliation = " roles.";
+    if (users.size() == 0) {
+      if (size == 1) {
+         rolePluraliation = " role.";
+      }
+      response = Response.createSuccessfulResponse(users, "No users found with the " + size + rolePluraliation);
+    } else {
+      
+      response = Response.createSuccessfulResponse(users);
+    }
+    
+    
+    return response;
+  }
+  
   @RequestMapping( value="/user/addrole/{username}/{newrole}", method = RequestMethod.GET )
   public @ResponseBody Response addRole(@PathVariable String username, @PathVariable String newrole) {
 

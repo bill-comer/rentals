@@ -33,6 +33,17 @@ public class Response implements Serializable
     return response;
    }
   
+  public static Response createSuccessfulResponse(List<User> users, String message)
+  {
+    Response response = createSuccessfulResponse(users);
+    
+    ArrayList<String> messages = new ArrayList<String>();
+    messages.add(message);
+    response.setMessages(messages);
+    
+    return response;
+  }
+  
   public static Response createFailedResponseForUser(User user, String message) {
     Response response = new Response();
     
@@ -118,4 +129,6 @@ public class Response implements Serializable
       && (aObjA != null && aObjA.equals(aObjB))
       || aObjA == null;
   }
+
+  
 }

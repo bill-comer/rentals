@@ -60,4 +60,12 @@ public class UserDaoImpl extends GenericDao<User, Long>
     return false;
   }
 
+
+  public List<User> getUsersWithNumberOfRoles(int numRoles)
+  {
+    Query query = getSession().createQuery("FROM User user WHERE user.userRoles.size = :numRoles");
+    query.setParameter("numRoles", numRoles);
+    return (List<User>) query.list();
+  }
+
 }

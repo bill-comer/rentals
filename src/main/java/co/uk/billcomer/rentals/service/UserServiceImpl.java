@@ -74,6 +74,12 @@ public class UserServiceImpl implements UserService<User>
     return userDao.makePersistent(user);
   }
 
+  @Override
+  public List<User> getUsersWithNumberOfRoles(int numRoles)
+  {
+    return userDao.getUsersWithNumberOfRoles(numRoles);
+  }
+
 
 
 }

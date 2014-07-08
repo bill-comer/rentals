@@ -19,4 +19,6 @@ public interface UserService<T>
   public boolean doesUserHaveRole(User mockFoundUser, String string);
 
   public User updateUser(User user);
+
+  public List<User> getUsersWithNumberOfRoles(int i);
 }
