@@ -13,6 +13,11 @@ import co.uk.billcomer.rentals.domain.UserRole;
 @Repository("rentals.userDao")
 public class UserDaoImpl extends GenericDao<User, Long> 
 {
+  @SuppressWarnings("unchecked")
+  public List<User> getAll()
+  {
+    return (List<User>) getSession().createQuery("from User user ").list();
+  }
 
   public User getUserByUsername(String username) {
     Query query = getSession().createQuery("FROM User user WHERE user.username = :username");

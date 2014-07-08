@@ -2,6 +2,7 @@ package co.uk.billcomer.rentals.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,10 +19,17 @@ public abstract class GenericDao<T, ID extends Serializable>
   
   protected Class<T> classType;
 
+  protected String getClassName()
+  {
+    return classType.getSimpleName();
+  }
+  
   public T getById(final ID id)
   {
     return (T) getSession().get(getClassType(), id);
   }
+  
+
   
   @SuppressWarnings("unchecked")
   public GenericDao()

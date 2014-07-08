@@ -175,8 +175,14 @@ public class User implements Serializable
   }
   
   public String toString() {
+    
+    String manager = "";
+    if (getManager() != null) {
+      manager = ",manager[" + getManager().getUsername() + "]";
+    }
+    
     return "username[" + getUsername() + "],forname[" + getForename() 
-                + "],surname[" + getSurname() + "], email[" + getEmail() + "], roles[" + getUserRoles() + "]";
+                + "],surname[" + getSurname() + "], email[" + getEmail() + "], roles[" + getUserRoles() + "]" + manager;
   }
   
   public boolean isUpdateOfFieldsRequired(String email, String surname, String forename)

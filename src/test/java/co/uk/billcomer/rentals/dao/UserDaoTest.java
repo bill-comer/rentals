@@ -182,4 +182,45 @@ public class UserDaoTest
     assertFalse("This user should not have this roles", userDao.doesUserHaveRole(user, "role_2"));
   }
   
+
+  @Test
+  @DatabaseSetup("rentals_3users_withRoles.xml")
+  public void test_getUsersWithNumberOfRoles() throws Exception
+  {
+    assertEquals("no users with no roles",1,  userDao.getUsersWithNumberOfRoles(0).size() );
+    assertEquals("one user with 1 roles",1,  userDao.getUsersWithNumberOfRoles(1).size() );
+    assertEquals("one user with 2 roles",1,  userDao.getUsersWithNumberOfRoles(2).size() );
+  }
+  
+
+  @Test
+  @DatabaseSetup("rentals_3users_withRoles.xml")
+  public void test_getUsersWithManagerAndNumberOfRoles_noUserHasAManager() throws Exception
+  {
+    assertEquals("no users have a manager",0,  userDao.getUsersWithManagerAndNumberOfRoles("some_manager", 1).size() );
+  }
+  
+
+  @Test
+  @DatabaseSetup("rentals_3users_withRolesAndManager.xml")
+  public void test_getUsersWithManagerAndNumberOfRoles_HasAManager_ButWrongNumRoles() throws Exception
+  {
+    assertEquals("no users have a manager with two role",0,  userDao.getUsersWithManagerAndNumberOfRoles("foo1_username", 2).size() );
+  }
+  
+
+  @Test
+  @DatabaseSetup("rentals_3users_withRolesAndManager.xml")
+  public void test_getUsersWithManagerAndNumberOfRoles_HasAManager_withOneRole() throws Exception
+  {
+    
+    User manager = userDao.getById(1L);
+    User user = userDao.getById(2L);
+    user.setManager(manager);
+    userDao.updateUser(user);
+
+    
+    List<User> all = userDao.getAll();
+    assertEquals("no users have a manager with two role",1,  userDao.getUsersWithManagerAndNumberOfRoles("foo1_username", 1).size() );
+  }
 }
