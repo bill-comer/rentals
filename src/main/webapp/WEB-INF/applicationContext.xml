@@ -4,13 +4,22 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <!-- Root Context: defines shared resources visible to all other web components -->
+<!-- PROPERTY CONFIGURER START -->
+  <bean id="rentals_propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+        <value>classpath:config/live-db.properties</value>
+      </list>
+    </property>
+    <property name="searchSystemEnvironment" value="true"/>
+  </bean>
+  <!-- PROPERTY CONFIGURER END -->
 
-
-  <bean id="rentals_dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-    <property name="username" value="rentals"/>
-    <property name="password" value="rentals"/>
-      <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-      <property name="url" value="jdbc:mysql://localhost:3306/rentals" />
+   <bean id="rentals_dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="username" value="${live.db.username}"/>
+    <property name="password" value="${live.db.password}"/>
+      <property name="driverClassName" value="${live.db.driverClassName}" />
+      <property name="url" value="${live.db.url}" />
   </bean>
   
   <bean id="rentals_transactionManager" name="rentals_transactionManager"
@@ -26,8 +35,8 @@
     <property name="hibernateProperties">
     
       <props>
-        <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-        <prop key="hibernate.show_sql">true</prop>
+        <prop key="hibernate.dialect">${live.hibernate.dialect}</prop>
+        <prop key="hibernate.show_sql">${live.hibernate.show_sql}</prop>
         <prop key="hibernate.cache.use_second_level_cache">true</prop>
 
 <prop key="hibernate.current_session_context_class">context.TransactionAwareSessionContext</prop>
