@@ -24,10 +24,12 @@ public class UserJSONController
   @Qualifier("rentals.userService")
   private UserService<User> userService;
   
-  @RequestMapping( value="/user/id/{userId}", method = RequestMethod.GET )
-  public @ResponseBody Response getUserById(@PathVariable Long userId) {
+  @RequestMapping( value="/user/id/{p_userId}", method = RequestMethod.GET )
+  public @ResponseBody Response getUserById(@PathVariable String p_userId) {
  
     Response response = null;
+    
+    Long userId= Long.parseLong(p_userId);
     
     User user = userService.getUserById(userId);
     
@@ -55,7 +57,7 @@ public class UserJSONController
   
 
   
-  @RequestMapping( value="/user/username/{username:[a-zA-Z.]+}", method = RequestMethod.GET )
+  @RequestMapping( value="/user/username/{username:.+}", method = RequestMethod.GET )
   public @ResponseBody Response getUserByUsername(@PathVariable String username) {
 
     Response response = null;
@@ -73,7 +75,7 @@ public class UserJSONController
   
 
   
-  @RequestMapping( value="/user/surname/{surname}", method = RequestMethod.GET )
+  @RequestMapping( value="/user/surname/{surname:.+}", method = RequestMethod.GET )
   public @ResponseBody Response getUsersBySurname(@PathVariable String surname) {
 
     Response response = null;
@@ -154,10 +156,12 @@ public class UserJSONController
     return response;
   }
   
-  @RequestMapping( value="/user/withroles/{size}", method = RequestMethod.GET )
-  public @ResponseBody Response withRoles(@PathVariable int size) {
+  @RequestMapping( value="/user/withroles/{p_size}", method = RequestMethod.GET )
+  public @ResponseBody Response withRoles(@PathVariable String p_size) {
 
     Response response = null;
+    
+    int size = Integer.parseInt(p_size);
     
     List<User> users = userService.getUsersWithNumberOfRoles(size);
 
